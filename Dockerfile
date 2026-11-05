@@ -9,7 +9,8 @@ WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PORT=8000 \
-    ENVIRONMENT=production
+    ENVIRONMENT=production \
+    PYTHONPATH=/app
 
 # Install essential system runtime libraries (libgomp1 for OpenMP acceleration in LightGBM/XGBoost)
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -29,9 +30,12 @@ COPY simulation ./simulation
 COPY optimization ./optimization
 COPY scripts ./scripts
 
+# Install medflow package in editable mode so setuptools discovers all packages
+RUN pip install --no-cache-dir --no-deps -e .
+
 # Initialize database schema and pre-bake synthetic baseline data during build
 # so cold-starts consume minimal memory (<150MB RAM)
-RUN python scripts/bootstrap_demo.py
+RUN PYTHONPATH=/app python scripts/bootstrap_demo.py
 
 # Expose default port
 EXPOSE 8000

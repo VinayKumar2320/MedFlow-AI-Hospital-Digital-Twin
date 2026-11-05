@@ -23,6 +23,8 @@ services:
         value: production
       - key: PYTHONUNBUFFERED
         value: "1"
+      - key: PYTHONPATH
+        value: "/app"
       - key: DEBUG
         value: "false"
       - key: CORS_ORIGINS
