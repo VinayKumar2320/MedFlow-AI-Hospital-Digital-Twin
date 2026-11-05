@@ -1,26 +1,41 @@
 # MedFlow — AI-Powered Hospital Operations Digital Twin & Emergency Response Optimizer
 
-[![Python 3.12+](https://img.shields.io/badge/python-3.12%20%7C%203.13-blue.svg)](https://www.python.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688.svg)](https://fastapi.tiangolo.com)
-[![SimPy](https://img.shields.io/badge/SimPy-4.1.2-red.svg)](https://simpy.readthedocs.io/)
-[![OR-Tools](https://img.shields.io/badge/Google%20OR--Tools-CP--SAT-orange.svg)](https://developers.google.com/optimization)
-[![LightGBM](https://img.shields.io/badge/LightGBM-Quantile%20GBDT-green.svg)](https://lightgbm.readthedocs.io/)
-[![React 19](https://img.shields.io/badge/React-19.0-61dafb.svg)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue.svg)](https://www.typescriptlang.org/)
+[![CI/CD Pipeline](https://github.com/VinayKumar2320/MedFlow-AI-Hospital-Digital-Twin/actions/workflows/ci.yml/badge.svg)](https://github.com/VinayKumar2320/MedFlow-AI-Hospital-Digital-Twin/actions)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Render%20Dashboard-00C7B7?style=flat&logo=render)](https://medflow-dashboard.onrender.com)
+[![API Docs](https://img.shields.io/badge/API%20Docs-FastAPI%20Swagger-009688?style=flat&logo=fastapi)](https://medflow-api.onrender.com/docs)
+[![Python 3.12+](https://img.shields.io/badge/Python-3.12%20%7C%203.13-3776AB?style=flat&logo=python)](https://www.python.org/)
+[![SimPy](https://img.shields.io/badge/Discrete%20Event-SimPy%204.1-E11D48?style=flat)](https://simpy.readthedocs.io/)
+[![Google OR-Tools](https://img.shields.io/badge/Optimizer-Google%20OR--Tools%20CP--SAT-EA4335?style=flat&logo=google)](https://developers.google.com/optimization)
+[![LightGBM](https://img.shields.io/badge/Forecasting-LightGBM%20Quantile-22C55E?style=flat)](https://lightgbm.readthedocs.io/)
+[![React 19](https://img.shields.io/badge/Frontend-React%2019%20%2B%20TypeScript-61DAFB?style=flat&logo=react)](https://react.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-> **Important Operational & Ethical Notice:** MedFlow is an operational research, capacity planning, and educational simulation platform. It is designed to model resource bottlenecks, queueing delays, and shift staffing allocations. **It does not make clinical triage, diagnosis, or patient care decisions.** All recommendations are simulations requiring human administrative validation.
+---
+
+## 🌐 Live Production Demonstration
+
+The application is deployed on public cloud infrastructure (100% free tier):
+
+| Component | Endpoint / URL | Operational Status |
+| :--- | :--- | :--- |
+| **Interactive Dashboard** | [https://medflow-dashboard.onrender.com](https://medflow-dashboard.onrender.com) | ✅ Live SPA (Render Static Site) |
+| **Production REST API** | [https://medflow-api.onrender.com/api/v1/health](https://medflow-api.onrender.com/api/v1/health) | ✅ Online (Docker Web Service) |
+| **Interactive Swagger Docs**| [https://medflow-api.onrender.com/docs](https://medflow-api.onrender.com/docs) | ✅ Live OpenAPI Explorer |
+
+> **Operational & Ethical Notice:** MedFlow is an operational research, capacity planning, and educational simulation platform. It models resource bottlenecks, queuing delays, and shift staffing allocations. **It does not make clinical triage, diagnosis, or patient care decisions.** All recommendations are simulations requiring human administrative validation.
 
 ---
 
 ## 1. Executive Summary & Product Vision
+
 Emergency departments operate under volatile stochastic demand, tight staffing constraints, and life-critical time horizons. A sudden patient surge or staffing deficit creates cascading bottlenecks—prolonging wait times, overburdening clinical staff, and degrading care quality.
 
-**MedFlow** is a full-stack hospital operations intelligence platform that couples:
-1. **Time-Series Demand Forecasting:** (Seasonal Naive, Poisson GLM, XGBoost, LightGBM Quantile GBDT) predicting upcoming patient arrivals at 1h, 4h, 12h, and 24h horizons with calibrated 80% and 95% uncertainty bands.
-2. **Discrete-Event Simulation (SimPy 4.1):** High-fidelity digital twin modeling the complete patient journey (Arrival &rarr; Registration &rarr; Triage &rarr; Assessment &rarr; Diagnostics &rarr; Treatment &rarr; Observation &rarr; Departure) with non-preemptive Emergency Severity Index (ESI 1–5) priority queuing, anti-starvation mechanisms, and finite resource contention (beds, physicians, nurses, diagnostic modalities).
-3. **Constraint Optimization (Google OR-Tools CP-SAT + Simulation Evaluation):** Solves multi-shift staffing and capacity allocation models subject to budget ceilings, nurse-to-physician safety ratios (\(\ge 1.6\)), and peak diurnal coverage requirements, evaluated across stochastic replications with Common Random Numbers (CRN).
-4. **Interactive Digital Twin Canvas:** Real-time visual event playback with queue counters, occupancy meters, what-if stress lab, bottleneck sensitivity diagnostics, and scenario comparison.
+**MedFlow** answers fundamental operational questions using genuine machine learning, discrete-event simulation, and mathematical optimization—not static formulas or fabricated numbers:
+
+1. **How many patients are likely to arrive in the next 1, 4, 12, and 24 hours?** &rarr; LightGBM Quantile GBDT models non-homogeneous arrival intensities with 80% and 95% uncertainty bands.
+2. **When and where does the emergency department experience congestion?** &rarr; SimPy 4.1 discrete-event state engine tracks queues across registration, triage, assessment, diagnostic imaging, and treatment beds.
+3. **Which resources cause the largest delays?** &rarr; Automated bottleneck detection and counterfactual sensitivity analysis decompose wait times.
+4. **Which shift staffing allocation minimizes waiting times under a fixed budget?** &rarr; Google OR-Tools CP-SAT solves mixed-integer shift allocations validated via Common Random Numbers (CRN) simulation.
 
 ---
 
@@ -76,11 +91,40 @@ Emergency departments operate under volatile stochastic demand, tight staffing c
 
 ---
 
-## 3. Machine Learning Forecasting Benchmark
+## 3. Seven Interactive Dashboard Modules
 
-Models were trained and evaluated on an out-of-time chronological test split (70% train, 15% validation, 15% holdout test). Prediction intervals are estimated via pinball loss quantile regression.
+The single-page application incorporates seven dedicated operational views:
 
-### Model Benchmark Leaderboard (1-Hour Horizon)
+### 1. Hospital Command Center
+Real-time summary gauges, active emergency department census, waiting patients count, treatment bed occupancy percentage, clinical staff currently on duty, and live operational alerts.
+
+### 2. Demand Forecasting Studio
+Interactive trajectory charts comparing historical arrivals against predictions across 24h, 48h, and 72h horizons with 80% (inner) and 95% (outer) quantile uncertainty bands, plus tree-split feature importance gain.
+
+### 3. Digital Twin Simulator Canvas
+Live operational flow diagram animating patient transitions through 7 clinical stations:
+$$\text{Arrival} \longrightarrow \text{Registration} \longrightarrow \text{Triage} \longrightarrow \text{Bed Queue} \longrightarrow \text{Assessment} \longrightarrow \text{Diagnostics} \longrightarrow \text{Treatment} \longrightarrow \text{Departure}$$
+Features play/pause/step controls, simulation clock, and speed multipliers (1x, 2x, 5x, 10x).
+
+### 4. What-If Scenario Lab
+Interactive stress-testing laboratory allowing operational planners to configure patient surge percentages, physician counts, nurse counts, bed closures, and diagnostic outages. Generates empirical confidence intervals and bottleneck diagnoses in SimPy.
+
+### 5. Optimization Studio
+Staffing decision matrix displaying baseline vs OR-Tools recommended shift allocations across Morning (07–15h), Evening (15–23h), and Night (23–07h) shifts. Interactive Pareto tradeoff curve (Additional Daily Cost vs Wait Time Reduction).
+
+### 6. Scenario Comparison
+Side-by-side grouped comparative analysis across three operational scenarios: **Nominal Baseline** vs **Unmitigated +40% Surge** vs **Optimized Staffing Response**.
+
+### 7. Model Intelligence & Scientific Validation
+Out-of-time test set model leaderboards, quantile pinball calibration curves (80% and 95% empirical coverage), horizon error scaling (1h to 24h), and mathematical queueing invariant proofs.
+
+---
+
+## 4. Machine Learning Forecasting Benchmark
+
+All models were evaluated on a chronological holdout test set (70% train, 15% validation, 15% out-of-time test):
+
+### Model Leaderboard (1-Hour Influx Prediction)
 | Model | Architecture | MAE (pt/hr) | RMSE | WAPE (%) | Bias | 80% Coverage |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Seasonal Naive** | Persistence benchmark (Lag 168h) | 3.895 | 5.007 | 36.59% | +0.131 | N/A |
@@ -96,180 +140,90 @@ Models were trained and evaluated on an out-of-time chronological test split (70
 
 ---
 
-## 4. Discrete-Event Simulation & Operational Benchmarks
+## 5. Discrete-Event Simulation & Operational Benchmarks
 
-Simulated using SimPy 4.1 over 48 hours with multiple stochastic replications.
+Simulated with SimPy 4.1 over 48 hours using multiple stochastic replications:
 
-| Scenario | Arrival Volume | Mean Wait Time | P95 Wait Time | Throughput | Bed Occupancy | Nurse Util |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Baseline Normal** | 12.5 pt/hr nominal | **35.7 min** | 68.0 min | 10.9 pt/hr | 72.5% | 64.2% |
-| **Scenario A: Surge (+40%)** | 17.5 pt/hr peak | **84.2 min** | 162.5 min | 14.1 pt/hr | 96.2% | 93.8% |
-| **Scenario B: Nurse Shortage (-20%)** | 12.5 pt/hr nominal | **68.4 min** | 134.0 min | 11.2 pt/hr | 88.0% | 98.1% |
-| **Scenario C: Bed Closure (-5 Beds)** | 12.5 pt/hr nominal | **54.1 min** | 102.5 min | 11.0 pt/hr | 97.4% | 71.0% |
-| **Scenario E: Diagnostic Outage (-50%)**| 12.5 pt/hr nominal | **62.3 min** | 120.0 min | 11.1 pt/hr | 84.2% | 74.0% |
-| **Scenario G: Severe Compound Crisis** | +30% surge, -20% RNs | **96.5 min** | 194.0 min | 12.8 pt/hr | 98.5% | 99.0% |
-| **Surge + OR-Tools Optimized Allocation**| +40% surge + CP-SAT | **46.1 min** | **82.0 min** | **16.9 pt/hr** | **81.0%** | **76.5%** |
+| Scenario | Arrival Volume | Mean Wait | P95 Wait | Throughput | Bed Occupancy | Nurse Util | Bottleneck |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **Baseline Normal** | 12.5 pt/hr nominal | **35.7 min** | 68.0 min | 10.9 pt/hr | 72.5% | 64.2% | Nominal |
+| **Scenario A: Surge (+40%)** | 17.5 pt/hr peak | **84.2 min** | 162.5 min | 14.1 pt/hr | 96.2% | 93.8% | Nurses & Beds |
+| **Scenario B: Nurse Shortage (-20%)** | 12.5 pt/hr nominal | **68.4 min** | 134.0 min | 11.2 pt/hr | 88.0% | 98.1% | Bedside Care |
+| **Scenario C: Bed Closure (-5 Beds)** | 12.5 pt/hr nominal | **54.1 min** | 102.5 min | 11.0 pt/hr | 97.4% | 71.0% | Bed Queue |
+| **Scenario E: Diagnostic Outage (-50%)**| 12.5 pt/hr nominal | **62.3 min** | 120.0 min | 11.1 pt/hr | 84.2% | 74.0% | CT / Labs |
+| **Scenario G: Severe Compound Crisis** | +30% surge, -20% RN | **96.5 min** | 194.0 min | 12.8 pt/hr | 98.5% | 99.0% | Critical Delay |
+| **Surge + OR-Tools Optimized Allocation**| +40% surge + CP-SAT | **46.1 min** | **82.0 min** | **16.9 pt/hr** | **81.0%** | **76.5%** | **Balanced** |
 
-### Queueing Invariants Verified:
-- **Conservation of Patients:** `total_departed + in_system_at_cutoff == total_arrived` (Verified 100%, 0 discrepancy across all tests).
-- **Resource Bounds:** Utilization semaphores strictly bounded in \([0.0, 1.0]\).
-- **Non-Negative Waits:** \(W_s(p) \ge 0.0\).
-
----
-
-## 5. Constraint Optimization Formulation (Google OR-Tools CP-SAT)
-
-Decision variables govern physician and nursing labor allocations across three 8-hour operational shifts:
-- Morning Shift: 07:00 – 15:00
-- Evening Shift: 15:00 – 23:00
-- Night Shift: 23:00 – 07:00
-
-### Key Constraints:
-1. **Budget Ceiling:** Total daily expenditure \(\le \text{Baseline Cost} + \text{Max Additional Budget}\).
-2. **Clinical Safety Ratio:** Registered Nurse-to-Physician ratio \(\ge 1.6\) across all individual shifts.
-3. **Diurnal Influx Coverage:** Mandatory elevated nursing thresholds during morning and evening peak arrival windows.
-4. **Capacity Bounds:** Physical beds and diagnostic imaging stations bounded by structural availability.
-
-Simulation coupling validates candidate plans across stochastic replications using Common Random Numbers (CRN) to eliminate evaluation variance.
+### Verified Queueing Invariants:
+- **Conservation of Mass:** $N_{\text{arrived}} = N_{\text{departed}} + N_{\text{in\_system}}$ (100% verified, 0 discrepancy across all tests).
+- **Resource Boundary:** Utilization semaphores strictly bounded in $[0.0, 1.0]$.
+- **Non-Negative Waits:** Waiting times $W_s(p) \ge 0.0$ for all stages.
 
 ---
 
-## 6. Frontend Dashboard Modules
-
-The React 19 + TypeScript dashboard includes 7 comprehensive views:
-1. **Hospital Command Center:** Real-time active census, waiting queue metrics, bed occupancy gauge, staffing on duty, next-hour arrival influx, and live alerts.
-2. **Demand Forecasting Studio:** Multi-horizon forecast curves, 80% & 95% quantile uncertainty bands, historical ground-truth tracking, and tree-split feature importances.
-3. **Digital Twin Operational Canvas:** Interactive flow diagram animating patient tokens across 7 stages with live occupancy and queue metrics, play/pause/step controls, and speed multipliers (1x–10x).
-4. **What-If Scenario Lab:** Interactive sliders for surge %, physician count, nurse count, beds, and diagnostic stations with instant SimPy execution and bottleneck diagnostics.
-5. **Optimization Studio:** CP-SAT shift matrix recommendations, budget utilization gauge, Pareto tradeoff frontier (Cost vs Wait Reduction), and constraint verification badges.
-6. **Scenario Comparison:** Side-by-side comparative analysis of Baseline vs Unmitigated Surge vs Optimized Intervention.
-7. **Model Intelligence:** Algorithmic leaderboard, interval calibration coverage analysis, horizon error scaling, and queueing invariant proofs.
-
----
-
-## 7. Quick Start Guide
+## 6. Quick Start & Local Execution
 
 ### Prerequisites
 - Python 3.12 or 3.13
-- Node.js 18+ and npm
+- Node.js 20+ and npm
 - OpenMP runtime (`brew install libomp` on macOS, `sudo apt-get install libgomp1` on Linux)
 
-### Local Setup (Single Command Bootstrap)
+### Local Setup (Single-Command Bootstrap)
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/your-username/medflow.git
-cd medflow
+# 1. Clone repository
+git clone https://github.com/VinayKumar2320/MedFlow-AI-Hospital-Digital-Twin.git
+cd MedFlow-AI-Hospital-Digital-Twin
 
-# 2. Set up Python virtual environment
+# 2. Setup Python environment
 python3 -m venv .venv
 source .venv/bin/activate
-
-# 3. Install Python dependencies
 pip install -e .
 
-# 4. Bootstrap demo (generates synthetic data, trains ML models, seeds DB, tests SimPy & CP-SAT)
+# 3. Bootstrap demo (generates synthetic datasets, trains models, seeds DB)
 python scripts/bootstrap_demo.py
 
-# 5. Start the FastAPI Backend
+# 4. Start FastAPI backend (Port 8000)
 uvicorn backend.app.main:app --reload --port 8000
-```
-API Documentation available at: [http://localhost:8000/docs](http://localhost:8000/docs)
+# -> API Docs: http://localhost:8000/docs
 
-```bash
-# 6. In a new terminal, start the React Frontend
+# 5. In a new terminal, start React frontend (Port 3000)
 cd frontend
 npm install
 npm run dev
+# -> Dashboard: http://localhost:3000
 ```
-Dashboard available at: [http://localhost:3000](http://localhost:3000)
 
----
-
-## 8. Automated Testing & Verification
+### Automated Testing
 
 ```bash
-# Run complete test suite (unit tests, simulation invariants, API integration)
+# Run 21 automated integration, invariant, and unit tests
 PYTHONPATH=. pytest backend/tests -v
 
-# Run code formatting and linter check
+# Run code style & formatting check
 ruff check backend ml simulation optimization scripts
 
-# Build frontend production bundle
+# Verify production frontend build
 cd frontend && npm run build
 ```
 
 ---
 
-## 9. Docker Deployment
+## 7. Cloud Deployment (Render Blueprint)
 
-Launch the complete application with Docker Compose:
+The project includes a root `render.yaml` configuring the complete multi-service architecture for 100% free hosting:
 
-```bash
-docker compose up --build
-```
-The unified container serves both the FastAPI API and the React interface at `http://localhost:8000`.
-
----
-
-## 10. Repository Structure
-
-```
-medflow/
-├── backend/
-│   ├── app/
-│   │   ├── api/routes/        # REST route controllers (health, forecasts, simulations, etc.)
-│   │   ├── core/              # Config, database, logging, security
-│   │   ├── models/            # SQLAlchemy 2.0 database models
-│   │   ├── schemas/           # Pydantic v2 validation schemas
-│   │   ├── repositories/      # Database access layer and seeders
-│   │   └── main.py            # FastAPI entry point & CORS
-│   └── tests/
-│       ├── unit/              # Simulation invariants, data validation, CP-SAT tests
-│       └── integration/       # End-to-end API integration tests
-├── ml/
-│   ├── preprocessing/         # Synthetic arrival & patient records generator
-│   ├── features/              # Time-series feature engineering (lags, rolling stats)
-│   ├── training/              # LightGBM, XGBoost, Poisson GLM training pipeline
-│   └── artifacts/             # Persisted model evaluation metrics & forecast JSON
-├── simulation/
-│   ├── entities/              # Patient entity & ESI triage enums
-│   ├── resources/             # Monitored SimPy PriorityResources
-│   ├── processes/             # Patient flow stage transitions & NHPP arrival generator
-│   ├── scenarios/             # Canonical hospital profiles & stress presets
-│   └── experiments/           # Monte Carlo replication runner & bottleneck analyzer
-├── optimization/
-│   ├── solvers/               # Google OR-Tools CP-SAT multi-shift solver
-│   └── evaluation/            # Simulation-based validation with Common Random Numbers
-├── frontend/
-│   ├── src/
-│   │   ├── components/        # Navbar & layout components
-│   │   ├── pages/             # 7 core operational views
-│   │   ├── services/          # API client for /api/v1
-│   │   ├── store/             # Zustand state management
-│   │   └── types/             # TypeScript domain definitions
-│   └── package.json
-├── scripts/
-│   ├── bootstrap_demo.py      # One-shot database & model initialization
-│   ├── generate_synthetic_data.py
-│   ├── train_models.py
-│   ├── run_simulation.py
-│   └── benchmark_optimizer.py
-├── docs/                      # Technical methodology, architecture, and safety docs
-├── Dockerfile
-├── docker-compose.yml
-├── pyproject.toml
-└── README.md
-```
+1. Sign in to [Render](https://dashboard.render.com).
+2. Click **New +** &rarr; **Blueprint**.
+3. Select `VinayKumar2320/MedFlow-AI-Hospital-Digital-Twin`.
+4. Name the Blueprint `medflow-production` and click **Apply**.
+5. Render deploys:
+   - `medflow-api`: Docker Web Service (Free plan, 512 MB RAM)
+   - `medflow-dashboard`: Static Site (React 19 SPA, zero RAM overhead)
 
 ---
 
-## 11. Known Limitations & Future Work
-- **Inpatient Boarding:** The current digital twin focuses on the emergency department; future work will model hospital-wide inpatient bed requests and surgical intensive care admissions.
-- **Dynamic Physician Specialization:** Attending physicians are currently modeled as emergency generalists; future iterations can separate trauma surgeons, pediatric specialists, and internal medicine consults.
-- **Federated Observational Calibration:** When valid de-identified data access agreements permit, parameters can be dynamically calibrated against aggregate hospital metrics.
+## 8. License & Authorship
 
----
-
-## 12. License
-MIT License. Created for operational research, capacity planning, and educational simulation.
+- **Author:** Vinay Kumar ([GitHub @VinayKumar2320](https://github.com/VinayKumar2320))
+- **License:** MIT License. Built for operational research, educational simulation, and healthcare capacity planning.
