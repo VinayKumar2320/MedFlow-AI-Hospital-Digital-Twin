@@ -1,20 +1,18 @@
-# Multi-stage Dockerfile for MedFlow Hospital Operations Digital Twin
-
-# Stage 1: Build React Frontend
-FROM node:20-alpine AS frontend-builder
-WORKDIR /app/frontend
-COPY frontend/package*.json ./
-RUN npm ci
-COPY frontend/ ./
-RUN npm run build
-
-# Stage 2: Production Python Backend & Static Serving
+# ==============================================================================
+# MedFlow Backend — Production Dockerfile for Cloud Hosting (Render / Railway / Fly)
+# ==============================================================================
 FROM python:3.12-slim AS runner
+
 WORKDIR /app
 
-# Install system dependencies including OpenMP for LightGBM/XGBoost
+# Prevent Python from writing .pyc files and buffer stdout/stderr for real-time logs
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PORT=8000 \
+    ENVIRONMENT=production
+
+# Install essential system runtime libraries (libgomp1 for OpenMP acceleration in LightGBM/XGBoost)
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
     libgomp1 \
     curl \
     && rm -rf /var/lib/apt/lists/*
@@ -24,20 +22,23 @@ COPY pyproject.toml ./
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir .
 
-# Copy application modules
+# Copy backend application, ML artifacts, simulation, and optimization engines
 COPY backend ./backend
 COPY ml ./ml
 COPY simulation ./simulation
 COPY optimization ./optimization
 COPY scripts ./scripts
 
-# Copy built frontend assets to static directory for unified serving
-COPY --from=frontend-builder /app/frontend/dist ./frontend/dist
-
-# Initialize demo datasets and models
+# Initialize database schema and pre-bake synthetic baseline data during build
+# so cold-starts consume minimal memory (<150MB RAM)
 RUN python scripts/bootstrap_demo.py
 
-ENV PORT=8000
+# Expose default port
 EXPOSE 8000
 
-CMD ["uvicorn", "backend.app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Health check probe
+HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 \
+    CMD curl -f http://localhost:${PORT:-8000}/api/v1/health || exit 1
+
+# Production startup dynamically binding to $PORT provided by cloud host
+CMD ["sh", "-c", "uvicorn backend.app.main:app --host 0.0.0.0 --port ${PORT:-8000} --workers 1 --timeout-keep-alive 65"]
