@@ -28,7 +28,7 @@ services:
       - key: DEBUG
         value: "false"
       - key: CORS_ORIGINS
-        value: "https://medflow-dashboard.onrender.com,http://localhost:3000,http://localhost:5173"
+        value: "https://medflow-ai-dashboard.onrender.com,https://medflow-dashboard.onrender.com,http://localhost:3000,http://localhost:5173"
       - key: MAX_SIMULATION_HOURS
         value: "168"
       - key: MAX_MONTE_CARLO_REPLICATIONS
@@ -43,7 +43,7 @@ services:
   # Notice: No region or plan specified for static site per Render Blueprint schema.
   # ----------------------------------------------------------------------------
   - type: web
-    name: medflow-dashboard
+    name: medflow-ai-dashboard
     runtime: static
     rootDir: frontend
     buildCommand: npm install && npm run build
@@ -54,4 +54,4 @@ services:
         destination: /index.html
     envVars:
       - key: VITE_API_URL
-        value: https://medflow-api.onrender.com
+        value: https://medflow-api-kgsv.onrender.com
