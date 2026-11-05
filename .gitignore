@@ -1,9 +1,11 @@
-# Python
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
+
+# C extensions & build artifacts
 build/
 develop-eggs/
 dist/
@@ -16,38 +18,62 @@ parts/
 sdist/
 var/
 wheels/
+share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
+
+# Virtual Environments
 .venv/
 venv/
 ENV/
+env/
+.env/
 
-# Database & SQLite
+# Database files
 *.db
 *.sqlite
 *.sqlite3
+medflow.db
 
-# Node & Frontend
+# Logs & temporary files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Node & Frontend Build
 node_modules/
-frontend/dist/
 frontend/node_modules/
+frontend/dist/
+frontend/.vite/
 .npm
 .eslintcache
 
-# Testing & Cache
+# Testing & Type Checking
 .pytest_cache/
 .ruff_cache/
 .mypy_cache/
 htmlcov/
 .coverage
+.coverage.*
+coverage.xml
 
-# IDE
+# IDE & OS files
 .idea/
 .vscode/
 *.swp
 *.swo
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 
-# Environment
+# Secrets & Environment variables
 .env
+.env.local
+.env.*.local
