@@ -37,7 +37,7 @@ MedFlow is engineered for zero-cost, high-reliability deployment using Render's 
 | Service Name | Service Type | Runtime | Plan | Cost | Public URL |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **`medflow-dashboard`** | Static Site | Node 20 / Vite | Free | **$0.00 / mo** | `https://medflow-dashboard.onrender.com` |
-| **`medflow-api`** | Web Service | Docker (Python 3.12) | Free | **$0.00 / mo** | `https://medflow-api.onrender.com` |
+| **`medflow-api`** | Web Service | Docker (Python 3.12) | Free | **$0.00 / mo** | `https://medflow-api-kgsv.onrender.com` |
 
 ---
 
@@ -84,7 +84,7 @@ Render free web services provide 512 MB RAM and spin down after 15 minutes of in
    Render automatically parses `render.yaml` from the root of the repository:
    - **`medflow-api`**: Web Service (Docker, Free Plan, Oregon/Frankfurt)
    - **`medflow-dashboard`**: Static Site (Root Dir `frontend`, Build `npm install && npm run build`, Publish `dist`)
-   - **Environment Variables**: Confirms `VITE_API_URL=https://medflow-api.onrender.com` and `ENVIRONMENT=production`.
+   - **Environment Variables**: Confirms `VITE_API_URL=https://medflow-api-kgsv.onrender.com` and `ENVIRONMENT=production`.
 
 5. **Deploy:**
    - Enter Blueprint Name: `medflow-production`.
@@ -92,8 +92,8 @@ Render free web services provide 512 MB RAM and spin down after 15 minutes of in
    - Render initiates simultaneous deployment of both services.
 
 6. **Verify Live Services:**
-   - **Backend Health Check:** `https://medflow-api.onrender.com/api/v1/health`
-   - **Interactive API Documentation:** `https://medflow-api.onrender.com/docs`
+   - **Backend Health Check:** `https://medflow-api-kgsv.onrender.com/api/v1/health`
+   - **Interactive API Documentation:** `https://medflow-api-kgsv.onrender.com/docs`
    - **Frontend Dashboard:** `https://medflow-dashboard.onrender.com`
 
 ---
