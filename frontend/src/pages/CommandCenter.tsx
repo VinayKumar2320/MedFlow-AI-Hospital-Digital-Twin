@@ -20,25 +20,41 @@ export const CommandCenter: React.FC = () => {
   const { setCurrentPage } = useStore();
   const [data, setData] = useState<DashboardOverview | null>(null);
   const [loading, setLoading] = useState(true);
+  const [coldStartNotice, setColdStartNotice] = useState(false);
 
   useEffect(() => {
+    const timer = setTimeout(() => {
+      setColdStartNotice(true);
+    }, 4000);
+
     api.getDashboardOverview()
       .then((res) => {
         setData(res);
         setLoading(false);
+        clearTimeout(timer);
       })
       .catch((err) => {
         console.error('Failed to load overview:', err);
         setLoading(false);
+        clearTimeout(timer);
       });
+
+    return () => clearTimeout(timer);
   }, []);
 
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="flex flex-col items-center space-y-3">
+        <div className="flex flex-col items-center space-y-4 max-w-md text-center p-6 rounded-2xl bg-slate-900/60 border border-slate-800">
           <div className="w-10 h-10 border-4 border-teal-500 border-t-transparent rounded-full animate-spin" />
-          <p className="text-slate-400 text-sm font-medium">Synchronizing Hospital Digital Twin Census...</p>
+          <div>
+            <p className="text-white text-sm font-semibold">Synchronizing Hospital Digital Twin Census...</p>
+            {coldStartNotice && (
+              <p className="text-xs text-amber-300/90 mt-2 bg-amber-500/10 p-3 rounded-xl border border-amber-500/20 leading-relaxed">
+                Render free web services spin down after inactivity. Cold-starting the cloud digital twin backend container may take ~30–45s...
+              </p>
+            )}
+          </div>
         </div>
       </div>
     );

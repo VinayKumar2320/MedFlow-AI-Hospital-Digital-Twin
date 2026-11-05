@@ -8,12 +8,21 @@ import {
   Bottleneck,
 } from '../types';
 
-const API_BASE = '/api/v1';
+// Detect production API URL from Vite environment, falling back to local relative path
+const rawApiUrl = import.meta.env.VITE_API_URL || '';
+const API_BASE = rawApiUrl ? `${rawApiUrl.replace(/\/+$/, '')}/api/v1` : '/api/v1';
 
 async function handleResponse<T>(res: Response): Promise<T> {
   if (!res.ok) {
-    const errorText = await res.text();
-    throw new Error(`API Error [${res.status}]: ${errorText || res.statusText}`);
+    let errorDetail = res.statusText;
+    try {
+      const errorJson = await res.json();
+      errorDetail = errorJson.detail || errorDetail;
+    } catch {
+      const errorText = await res.text();
+      if (errorText) errorDetail = errorText;
+    }
+    throw new Error(`API Error [${res.status}]: ${errorDetail}`);
   }
   return res.json();
 }
