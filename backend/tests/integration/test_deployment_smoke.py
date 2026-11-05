@@ -30,15 +30,16 @@ def test_openapi_schema_readiness():
 
 def test_production_cors_headers():
     """Verifies that requests from the Render dashboard origin receive correct CORS headers."""
-    headers = {
-        "Origin": "https://medflow-dashboard.onrender.com",
-        "Access-Control-Request-Method": "GET",
-    }
-    response = client.get("/api/v1/health", headers=headers)
-    assert response.status_code == 200
-    assert "access-control-allow-origin" in response.headers
-    allowed_origin = response.headers["access-control-allow-origin"]
-    assert allowed_origin in ["https://medflow-dashboard.onrender.com", "*"]
+    for origin in ["https://medflow-dashboard-eyyu.onrender.com", "https://medflow-dashboard.onrender.com"]:
+        headers = {
+            "Origin": origin,
+            "Access-Control-Request-Method": "GET",
+        }
+        response = client.get("/api/v1/health", headers=headers)
+        assert response.status_code == 200
+        assert "access-control-allow-origin" in response.headers
+        allowed_origin = response.headers["access-control-allow-origin"]
+        assert allowed_origin in [origin, "*"]
 
 
 def test_dashboard_overview_smoke():

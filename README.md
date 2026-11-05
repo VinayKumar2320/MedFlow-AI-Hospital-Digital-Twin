@@ -3,7 +3,7 @@
 > **Enterprise-grade healthcare operations intelligence platform combining probabilistic arrival forecasting, discrete-event simulation, and constraint optimization for emergency department capacity planning.**
 
 [![CI/CD Pipeline](https://github.com/VinayKumar2320/MedFlow-AI-Hospital-Digital-Twin/actions/workflows/ci.yml/badge.svg)](https://github.com/VinayKumar2320/MedFlow-AI-Hospital-Digital-Twin/actions)
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Render%20Dashboard-00C7B7?style=flat&logo=render)](https://medflow-dashboard.onrender.com)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Render%20Dashboard-00C7B7?style=flat&logo=render)](https://medflow-dashboard-eyyu.onrender.com)
 [![API Docs](https://img.shields.io/badge/API%20Docs-FastAPI%20Swagger-009688?style=flat&logo=fastapi)](https://medflow-api-kgsv.onrender.com/docs)
 [![Python 3.12+](https://img.shields.io/badge/Python-3.12%20%7C%203.13-3776AB?style=flat&logo=python)](https://www.python.org/)
 [![SimPy](https://img.shields.io/badge/Discrete%20Event-SimPy%204.1-E11D48?style=flat)](https://simpy.readthedocs.io/)
@@ -20,7 +20,7 @@ The application is deployed on public cloud infrastructure (100% free tier):
 
 | Component | Endpoint / URL | Operational Status |
 | :--- | :--- | :--- |
-| **Interactive Dashboard** | [https://medflow-dashboard.onrender.com](https://medflow-dashboard.onrender.com) | ✅ Live SPA (Render Static Site) |
+| **Interactive Dashboard** | [https://medflow-dashboard-eyyu.onrender.com](https://medflow-dashboard-eyyu.onrender.com) | ✅ Live SPA (Render Static Site) |
 | **Production REST API** | [https://medflow-api-kgsv.onrender.com/api/v1/health](https://medflow-api-kgsv.onrender.com/api/v1/health) | ✅ Online & Verified (Docker Web Service) |
 | **Interactive Swagger Docs** | [https://medflow-api-kgsv.onrender.com/docs](https://medflow-api-kgsv.onrender.com/docs) | ✅ Live OpenAPI Explorer |
 | **Live 24h ML Forecast API** | [https://medflow-api-kgsv.onrender.com/api/v1/forecasts?horizon_hours=24](https://medflow-api-kgsv.onrender.com/api/v1/forecasts?horizon_hours=24) | ✅ LightGBM Predictions + CIs |

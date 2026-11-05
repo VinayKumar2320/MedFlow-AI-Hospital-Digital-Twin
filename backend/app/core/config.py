@@ -28,6 +28,7 @@ class Settings(BaseSettings):
             "http://localhost:8000",
             "http://127.0.0.1:8000",
             "https://medflow-dashboard.onrender.com",
+            "https://medflow-dashboard-eyyu.onrender.com",
             "https://medflow-ai-dashboard.onrender.com",
         ],
         description="Allowed CORS origins as list or comma-separated string."

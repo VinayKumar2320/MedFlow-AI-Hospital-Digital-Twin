@@ -36,7 +36,7 @@ MedFlow is engineered for zero-cost, high-reliability deployment using Render's 
 
 | Service Name | Service Type | Runtime | Plan | Cost | Public URL |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **`medflow-dashboard`** | Static Site | Node 20 / Vite | Free | **$0.00 / mo** | `https://medflow-dashboard.onrender.com` |
+| **`medflow-dashboard`** | Static Site | Node 20 / Vite | Free | **$0.00 / mo** | `https://medflow-dashboard-eyyu.onrender.com` |
 | **`medflow-api`** | Web Service | Docker (Python 3.12) | Free | **$0.00 / mo** | `https://medflow-api-kgsv.onrender.com` |
 
 ---
@@ -94,7 +94,7 @@ Render free web services provide 512 MB RAM and spin down after 15 minutes of in
 6. **Verify Live Services:**
    - **Backend Health Check:** `https://medflow-api-kgsv.onrender.com/api/v1/health`
    - **Interactive API Documentation:** `https://medflow-api-kgsv.onrender.com/docs`
-   - **Frontend Dashboard:** `https://medflow-dashboard.onrender.com`
+   - **Frontend Dashboard:** `https://medflow-dashboard-eyyu.onrender.com`
 
 ---
 
