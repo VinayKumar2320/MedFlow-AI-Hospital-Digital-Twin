@@ -1,7 +1,8 @@
 """Core configuration management using Pydantic Settings."""
 from typing import List, Union
-from pydantic_settings import BaseSettings
+
 from pydantic import Field, field_validator
+from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
@@ -10,13 +11,13 @@ class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
     ENVIRONMENT: str = "production"
     DEBUG: bool = False
-    
+
     # Database
     DATABASE_URL: str = Field(
         default="sqlite:///./medflow.db",
         description="Database connection URL. SQLite default for local zero-config; supports PostgreSQL."
     )
-    
+
     # CORS
     CORS_ORIGINS: Union[List[str], str] = Field(
         default=[
@@ -30,28 +31,28 @@ class Settings(BaseSettings):
         ],
         description="Allowed CORS origins as list or comma-separated string."
     )
-    
+
     @field_validator("CORS_ORIGINS", mode="before")
     @classmethod
     def parse_cors_origins(cls, v: Union[str, List[str]]) -> List[str]:
         if isinstance(v, str):
             return [origin.strip() for origin in v.split(",") if origin.strip()]
         return v
-    
+
     # Simulation & Operational Defaults
     DEFAULT_RANDOM_SEED: int = 42
     MAX_SIMULATION_HOURS: int = 168  # 1 week max
     DEFAULT_SIMULATION_HOURS: int = 48
     MAX_MONTE_CARLO_REPLICATIONS: int = 15  # Scaled for 512MB RAM budget
     DEFAULT_MONTE_CARLO_REPLICATIONS: int = 5
-    
+
     # Optimizer Defaults
     OPTIMIZER_TIME_LIMIT_SECONDS: int = 20
     HOURLY_COST_PHYSICIAN: float = 180.0
     HOURLY_COST_NURSE: float = 65.0
     HOURLY_COST_TECH: float = 40.0
     HOURLY_COST_BED: float = 25.0
-    
+
     class Config:
         env_file = ".env"
         extra = "ignore"

@@ -21,6 +21,11 @@ dependencies = [
     "xgboost>=2.1.0",
 ]
 
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["backend*", "ml*", "simulation*", "optimization*", "scripts*"]
+exclude = ["frontend*"]
+
 [tool.ruff]
 line-length = 120
 target-version = "py312"
