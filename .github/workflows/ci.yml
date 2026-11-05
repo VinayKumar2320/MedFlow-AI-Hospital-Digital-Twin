@@ -30,8 +30,8 @@ jobs:
 
       - name: Install System OpenMP Runtime
         run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends libgomp1
+          sudo apt-get update -qq || true
+          sudo apt-get install -y --no-install-recommends libgomp1 || true
 
       - name: Install Python Package & Test Dependencies
         run: |
